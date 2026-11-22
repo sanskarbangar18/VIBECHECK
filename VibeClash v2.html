@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VibeClash - Play. Compare. Go Viral.</title>
+<meta name="description" content="AI topic quizzes, friend quizzes, squad votes and viral story cards. Free, no signup.">
+<meta property="og:title" content="VibeClash - Play. Compare. Go Viral.">
+<meta property="og:description" content="Make a quiz on any topic with AI, or a friend quiz or squad vote, and share it on WhatsApp or Instagram Stories.">
+<meta property="og:image" content="https://yourdomain.com/og-image.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237C3AED'/%3E%3Cpath d='M36 10 22 36h9l-3 18 14-26h-9z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Noto+Sans+Devanagari:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--v:#7C3AED;--p:#EC4899;--c:#06B6D4;--bg:#0A0614;--fg:#F5F3FF;--mut:#A9A3C7;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--glow:rgba(124,58,237,.35)}
+html.light{--bg:#F7F5FF;--fg:#1A1433;--mut:#5F5880;--card:rgba(255,255,255,.75);--line:rgba(26,20,51,.1);--glow:rgba(236,72,153,.18)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,'Noto Sans Devanagari',system-ui,sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;line-height:1.5;
+background-image:radial-gradient(60vw 40vw at 10% -10%,var(--glow),transparent),radial-gradient(50vw 40vw at 110% 10%,rgba(6,182,212,.16),transparent);background-attachment:fixed}
+h1,h2,h3{font-family:Outfit,Inter,'Noto Sans Devanagari',sans-serif;letter-spacing:-.02em;margin:0 0 .4em;line-height:1.15}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+.nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 75%,transparent);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.nav .wrap{display:flex;align-items:center;gap:10px;min-height:64px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:8px;font:800 20px Outfit,sans-serif;text-decoration:none}
+.links{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.links a{padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--mut);font-size:14px}
+.links a:hover{color:var(--fg);background:var(--card)}
+select{width:auto!important;padding:8px 10px!important;font-size:14px!important}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:13px 20px;font:600 15px Inter,'Noto Sans Devanagari',sans-serif;color:#fff;background:linear-gradient(135deg,var(--v),var(--p));cursor:pointer;text-decoration:none;transition:transform .08s,box-shadow .2s;box-shadow:0 10px 30px -12px var(--v);text-align:center}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:var(--card);color:var(--fg);box-shadow:none;border:1px solid var(--line)}
+.btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
+.glass{background:var(--card);border:1px solid var(--line);border-radius:24px;backdrop-filter:blur(12px);padding:22px;margin-top:16px}
+.grid{display:grid;gap:14px;grid-template-columns:1fr}
+.grid.two{grid-template-columns:1fr}
+@media(min-width:760px){.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 60%,transparent);color:var(--fg);font:15px Inter,'Noto Sans Devanagari',sans-serif}
+label{display:block;font-size:13px;color:var(--mut);margin:12px 0 6px}
+.hero{padding:64px 0 28px;text-align:center}
+.hero h1{font-size:clamp(40px,8vw,84px);font-weight:800}
+.grad{background:linear-gradient(90deg,var(--v),var(--p),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pill{display:inline-block;padding:6px 12px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-size:13px;color:var(--mut)}
+.bar{height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--v),var(--p));transition:width .6s cubic-bezier(.2,.8,.2,1);border-radius:99px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;font:15px Inter,'Noto Sans Devanagari',sans-serif}
+.opt.on{border-color:var(--p);box-shadow:0 0 0 2px color-mix(in srgb,var(--p) 40%,transparent)}
+.av{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none;display:grid;place-items:center;font:700 18px Outfit,sans-serif;color:#fff;background:linear-gradient(135deg,var(--v),var(--c))}
+.ad{margin:20px auto;border:1px dashed var(--line);border-radius:14px;padding:8px;text-align:center;min-height:100px}
+.ad-label{display:block;font-size:11px;color:var(--mut);margin-bottom:4px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:12px 18px;border-radius:14px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:50;font-weight:600;max-width:90vw}
+.toast.show{opacity:1}
+.confetti{position:fixed;top:-20px;width:9px;height:14px;z-index:60;animation:fall linear forwards;pointer-events:none;border-radius:2px}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+.crown{color:#FACC15}
+.prose p,.prose li{color:var(--mut);line-height:1.7}
+.prose h2{margin-top:26px;color:var(--fg)}
+.pre{white-space:pre-line}
+details{border-top:1px solid var(--line);padding:14px 0}
+summary{cursor:pointer;font-weight:600;font-family:Outfit,sans-serif;font-size:18px}
+footer{border-top:1px solid var(--line);margin-top:56px;padding:28px 0;color:var(--mut);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 18px;justify-content:space-between;align-items:center}
+footer a{text-decoration:none}
+#admin-bar{position:relative;z-index:10;background:var(--card);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hide{display:none!important}
+@media(max-width:520px){.links{width:100%;margin-left:0;justify-content:center;order:3}.links a{padding:6px 8px;font-size:13px}.brand{font-size:18px}.hero{padding-top:36px}.glass{padding:18px;border-radius:20px}.btn{padding:12px 16px}.hero .row{flex-direction:column;align-items:stretch}.hero .btn{width:100%}}
+.item{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--line)}
+.qcard{border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px;background:color-mix(in srgb,var(--bg) 35%,transparent)}
+.opts{display:grid;gap:8px;grid-template-columns:1fr;margin-top:8px}
+@media(min-width:620px){.opts{grid-template-columns:1fr 1fr}}
+.opts label{display:flex;gap:8px;align-items:center;margin:0;color:var(--fg)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap" id="header"></div></header>
+<div id="admin-bar" class="hide"></div>
+<main id="app"></main>
+<footer><div class="wrap" id="footer"></div></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<canvas id="story" width="1080" height="1920" hidden></canvas>
+
+<script>
+/* ================= CONFIG ================= */
+// Your AI endpoint (see backend example). Example: '/api/generate-quiz'. Leave '' to disable AI.
+const CFG = { AI_ENDPOINT: '' };
+// SHA-256 of the admin password: echo -n 'YourPassword' | sha256sum   (empty = admin disabled)
+const ADMIN_SHA256 = '';
+
+/* ================= LANGUAGES ================= */
+const LANGS = { en:{name:'English',label:'English'}, hi:{name:'Hindi',label:'हिन्दी'}, mr:{name:'Marathi',label:'मराठी'} };
+const I18N = {
+en:{
+ 'nav.quiz':'Quiz','nav.vote':'Vote','nav.trends':'Trends','nav.theme':'Theme','nav.lang':'Language',
+ 'hero.tag':'Friend quizzes · AI topic quizzes · Squad votes','hero.h':'Play. Compare.','hero.hg':'Go Viral.',
+ 'hero.sub':'Make a quiz about yourself, or type any topic and let AI build the quiz. Run a squad vote. No signup. Share a link or a story card.',
+ 'hero.quiz':'Start a quiz','hero.vote':'Start a squad vote',
+ 'sec.quiz':'Kitna Jaante Ho?','sec.vote':'Kaun Zyada...?','sec.trends':'Trending Buzz & News','sec.why':'Why Friends Love Playing','sec.faq':'FAQs',
+ 'why.body':'Quizzes that test how well friends really know you start the fun fast. Votes settle debates. Story cards make results easy to share.',
+ 'card.quiz':'Make a quiz about yourself, or let AI write one on any topic. Friends guess and get a score with a badge and a live leaderboard.',
+ 'card.vote':'Add 2 to 8 friends with photos, pick a theme and share the link. Watch the bars move in real time.',
+ 'create':'Create a quiz','startVote':'Start a squad vote','allTrends':'All trends','play':'Play','open':'Open',
+ 'faq.q1':'Do I need an account?','faq.a1':'No. Create and play without signing up.',
+ 'faq.q2':'Are photos stored on a server?','faq.a2':'Photos are resized in your browser and included in the link you share. See the Privacy Policy.',
+ 'faq.q3':'Can I share to Instagram Stories?','faq.a3':'Yes. On a phone, use Share to Instagram Story to send the image, or download it and post it yourself.',
+ 'faq.q4':'Is this relationship advice?','faq.a4':'No. VibeClash is for entertainment only.',
+ 'foot.rights':'Entertainment only.','foot.about':'About','foot.contact':'Contact','foot.privacy':'Privacy','foot.terms':'Terms','foot.disclaimer':'Disclaimer',
+ 'mode.title':'Choose your quiz type','mode.self':'About me quiz','mode.selfd':'Answer 8 questions about yourself. Friends guess your answers.','mode.ai':'AI topic quiz','mode.aid':'Type any topic. AI writes the questions. Edit everything before you share.',
+ 'mode.selfBtn':'Make an about-me quiz','mode.aiBtn':'Make an AI topic quiz',
+ 'b.title':'Build your quiz','b.name':'Your name','b.photo':'Photo (optional)','b.topic':'Topic','b.topicPh':'e.g. Indian history, Cricket, Python basics','b.count':'Number of questions','b.diff':'Difficulty','b.lang':'Quiz language','b.gen':'Generate with AI','b.genBusy':'Creating your quiz…','b.add':'Add question','b.del':'Remove','b.create':'Create quiz link','b.q':'Question','b.opt':'Option','b.correct':'Correct answer','b.hint':'The selected option is the correct answer. You can edit everything.','b.min':'At least 3 questions are needed','b.tip':'AI result is a draft. Check facts and edit before sharing.',
+ 'easy':'Easy','medium':'Medium','hard':'Hard',
+ 'ai.noendpoint':'AI is not connected yet. Write questions manually, or connect the AI endpoint.','ai.topic':'Enter a topic first','ai.fail':'AI could not create the quiz. Try again or edit manually.',
+ 'q.1':'Mera mood off ho toh mujhe kya chahiye?','q.2':'Meri sabse badi habit kya hai?','q.3':'Late night craving kya hai?','q.4':'Mera favourite snack ya drink kya hai?','q.5':'Free time mein main kya karta/karti hoon?','q.6':'Meri sabse badi weakness kya hai?','q.7':'Stress mein main kya karta/karti hoon?','q.8':'Birthday pe mujhe kya gift chahiye?',
+ 'quiz.whoGuess':"Who's guessing?",'quiz.whoDesc':'Enter your name so {n} knows who you are.','quiz.yourName':'Your name','quiz.start':'Start guessing',
+ 'quiz.createdBy':'Created by','quiz.topic':'Topic','quiz.progress':'Question {i} of {n}','quiz.next':'Next','quiz.finish':'See my score','quiz.score':'Your score',
+ 'quiz.perfect':'You know {n} better than anyone.','quiz.ok':'Not bad. Check the ones you missed next time.','quiz.board':'Squad leaderboard','quiz.noScores':'No scores yet. Be the first.','quiz.again':'Play again',
+ 'quiz.broken':'This quiz link looks broken.','quiz.removed':'This quiz was removed for breaking the rules.',
+ 'badge.1':'Certified Soulmate Bestie','badge.2':'Ride-or-Die Dost','badge.3':'Solid Squad Member','badge.4':'Part-Time Dost',
+ 'v.title':'Kaun Zyada...?','v.desc':'Add 2 to 8 people, pick a theme and share the vote link.','v.theme':'Theme','v.custom':'Custom title','v.customPh':'Your custom title','v.name':'Name','v.photo':'Photo','v.addPerson':'Add person','v.create':'Create vote link',
+ 'v.t0':'Best Vibe','v.t1':'Sabse Funny','v.t2':'Main Character Energy','v.t3':'Sabse Pehle Bhoolne Wala','v.t4':'Group ka Leader',
+ 'v.linkReady':'Link ready','v.live':'Your vote is live','v.open':'Open the vote','v.another':'Make another','v.tap':'Tap a name to vote. You can vote once on this device.','v.thanks':'Thanks for voting. Results update live.','v.voteFor':'Vote for {n}','v.yours':'Your vote','v.votes':'votes','v.squad':'Squad vote',
+ 'share.ig':'Share to Instagram Story','share.dl':'Download Story Card','share.wa':'Share on WhatsApp','share.copy':'Copy link','share.igNote':'Instagram does not accept links from web pages in Stories. Share the image and add the link as a sticker.',
+ 'story.cta':'Play now on VibeClash','story.vote':'Vote now on VibeClash','story.beat':'Beat my score on VibeClash','story.tag':'Play. Compare. Go Viral.',
+ 'c.title':'Contact us','c.desc':'Questions, copyright claims or feedback? Send a message and we will reply within 2 working days.','c.name':'Name','c.email':'Email','c.msg':'Message','c.send':'Send message',
+ 'toast.copied':'Link copied','toast.copyFail':'Copy failed. Select the link and copy it.','toast.saved':'Story card saved. Link copied, post it anywhere.','toast.storage':'Storage is full. Remove some content in admin.',
+ 'toast.name':'Add your name','toast.banned':'Please remove banned words first.','toast.photo':'Could not read that photo. Continuing without it.','toast.fillQ':'Fill every question and all 4 options','toast.min':'Need at least 3 questions','toast.max':'Maximum 20 questions','toast.topic':'Enter a topic first','toast.voteTitle':'Add a theme title','toast.min2':'Add at least 2 people','toast.max8':'Maximum 8 people','toast.already':'You already voted','toast.enterName':'Enter your name first','toast.diffName':'Please pick a different name.','toast.mail':'Opening your email app','toast.adminNo':'Admin is not set up. Add ADMIN_SHA256 in the code.','toast.wrongpw':'Wrong password','toast.removed':'Removed','toast.genOk':'Draft ready. Check and edit before sharing.',
+ 'o.broken':'This vote link looks broken.','o.removed':'This vote was removed for breaking the rules.','o.back':'Go home','o.oops':'Oops',
+ 'p.broken':'Link broken',
+ 'legal.about.t':'About VibeClash','legal.about.b':'<p>VibeClash is a free, no-signup entertainment site for AI topic quizzes, friend quizzes, squad votes and shareable story cards. Anyone can play. Nobody needs an account.</p><h2>What we make</h2><p>Quizzes built from any topic you type, quizzes about yourself where friends guess your answers, and group votes for squad themes. Results can be shared as images or links.</p>',
+ 'legal.priv.t':'Privacy Policy','legal.priv.b':'<p>This policy explains how VibeClash handles information.</p><h2>Information you give us</h2><p>Names, photos, quiz topics, questions, answers and votes are used only to build the pages and cards you create. Photos are resized in your browser before use. Contact messages are sent through your email app.</p><h2>Where data is stored</h2><p>By default, quizzes, votes and scores are stored in your browser\'s local storage. Shared links contain the quiz or vote data, so anyone with a link can see it. Do not include private information. Topics you type for AI may be processed by our AI provider to generate questions.</p><h2>Cookies and advertising</h2><p>We may show ads served by Google AdSense. Google and its partners use cookies, including the DART cookie, to show ads based on your visits to this and other sites. You can opt out of personalised ads in Google Ads Settings or at www.aboutads.info.</p><h2>Children</h2><p>VibeClash is intended for users aged 13 and over.</p>',
+ 'legal.terms.t':'Terms & Conditions','legal.terms.b':'<h2>Use of the service</h2><p>Use VibeClash for personal, non-commercial entertainment. Do not try to break, scrape or overload it.</p><h2>User content</h2><p>You are responsible for everything you post, including names, photos, topics, questions, answers and votes. Get permission before using a photo of another person.</p><h2>Prohibited content</h2><p>No bullying, harassment, hate speech, threats, sexual or nudity content, content involving minors, or content that infringes others\' rights. We may remove content and restrict users who break these rules.</p><h2>AI-generated content</h2><p>AI quiz content may contain errors. Creators must review it before sharing.</p>',
+ 'legal.disc.t':'Disclaimer','legal.disc.b':'<p>VibeClash is for entertainment only. Care Scores, badges, vote results and AI-generated quizzes are not scientific measures, exam material, or professional advice. Verify facts from trusted sources before relying on them.</p>'
+},
+hi:{
+ 'nav.quiz':'क्विज़','nav.vote':'वोट','nav.trends':'ट्रेंड्स','nav.theme':'थीम','nav.lang':'भाषा',
+ 'hero.tag':'दोस्तों की क्विज़ · AI टॉपिक क्विज़ · स्क्वाड वोट','hero.h':'खेलो। तुलना करो।','hero.hg':'वायरल हो जाओ।',
+ 'hero.sub':'खुद के बारे में क्विज़ बनाओ, या कोई भी टॉपिक लिखो और AI क्विज़ बनाए। स्क्वाड वोट चलाओ। साइनअप नहीं चाहिए। लिंक या स्टोरी कार्ड शेयर करो।',
+ 'hero.quiz':'क्विज़ शुरू करो','hero.vote':'स्क्वाड वोट शुरू करो',
+ 'sec.quiz':'कितना जानते हो?','sec.vote':'कौन ज़्यादा...?','sec.trends':'ट्रेंडिंग बज़ और न्यूज़','sec.why':'दोस्तों को यह क्यों पसंद है','sec.faq':'अक्सर पूछे जाने वाले सवाल',
+ 'why.body':'जो क्विज़ बताती है कि दोस्त तुम्हें कितना जानते हैं, वो मज़ा जल्दी शुरू करती है। वोट बहस खत्म करते हैं। स्टोरी कार्ड नतीजे आसानी से शेयर करने देते हैं।',
+ 'card.quiz':'खुद के बारे में क्विज़ बनाओ, या AI को किसी भी टॉपिक पर लिखने दो। दोस्त अंदाज़ा लगाएँ और बैज व लाइव लीडरबोर्ड के साथ स्कोर पाएँ।',
+ 'card.vote':'फ़ोटो के साथ 2 से 8 दोस्त जोड़ो, थीम चुनो और लिंक शेयर करो। बार असली समय में चलते देखो।',
+ 'create':'क्विज़ बनाओ','startVote':'स्क्वाड वोट शुरू करो','allTrends':'सभी ट्रेंड्स','play':'खेलो','open':'खोलो',
+ 'faq.q1':'क्या अकाउंट चाहिए?','faq.a1':'नहीं। बिना साइनअप के बनाओ और खेलो।',
+ 'faq.q2':'क्या फ़ोटो सर्वर पर सेव होती हैं?','faq.a2':'फ़ोटो ब्राउज़र में छोटी होती हैं और शेयर किए गए लिंक में शामिल होती हैं। प्राइवेसी पॉलिसी देखो।',
+ 'faq.q3':'क्या Instagram Stories पर शेयर कर सकते हैं?','faq.a3':'हाँ। फ़ोन पर Share to Instagram Story दबाओ, या इमेज डाउनलोड करके खुद पोस्ट करो।',
+ 'faq.q4':'क्या यह रिश्तों की सलाह है?','faq.a4':'नहीं। VibeClash सिर्फ़ मनोरंजन के लिए है।',
+ 'foot.rights':'सिर्फ़ मनोरंजन के लिए।','foot.about':'हमारे बारे में','foot.contact':'संपर्क','foot.privacy':'प्राइवेसी','foot.terms':'नियम','foot.disclaimer':'अस्वीकरण',
+ 'mode.title':'क्विज़ का प्रकार चुनो','mode.self':'मेरे बारे में क्विज़','mode.selfd':'खुद के बारे में 8 सवालों के जवाब दो। दोस्त अंदाज़ा लगाएँगे।','mode.ai':'AI टॉपिक क्विज़','mode.aid':'कोई भी टॉपिक लिखो। AI सवाल लिखेगा। शेयर करने से पहले सब कुछ बदल सकते हो।',
+ 'mode.selfBtn':'मेरे बारे में क्विज़ बनाओ','mode.aiBtn':'AI टॉपिक क्विज़ बनाओ',
+ 'b.title':'अपनी क्विज़ बनाओ','b.name':'तुम्हारा नाम','b.photo':'फ़ोटो (वैकल्पिक)','b.topic':'टॉपिक','b.topicPh':'जैसे भारतीय इतिहास, क्रिकेट, Python बेसिक्स','b.count':'सवालों की संख्या','b.diff':'कठिनाई','b.lang':'क्विज़ की भाषा','b.gen':'AI से बनवाओ','b.genBusy':'तुम्हारी क्विज़ बन रही है…','b.add':'सवाल जोड़ो','b.del':'हटाओ','b.create':'क्विज़ लिंक बनाओ','b.q':'सवाल','b.opt':'विकल्प','b.correct':'सही जवाब','b.hint':'चुना गया विकल्प सही जवाब है। सब कुछ बदल सकते हो।','b.min':'कम से कम 3 सवाल चाहिए','b.tip':'AI का नतीजा ड्राफ़्ट है। शेयर करने से पहले तथ्य जाँचो और बदलो।',
+ 'easy':'आसान','medium':'मध्यम','hard':'कठिन',
+ 'ai.noendpoint':'AI अभी जुड़ा नहीं है। सवाल खुद लिखो, या AI endpoint जोड़ो।','ai.topic':'पहले टॉपिक लिखो','ai.fail':'AI क्विज़ नहीं बना सका। फिर कोशिश करो या खुद बदलो।',
+ 'q.1':'मेरा मूड ख़राब हो तो मुझे क्या चाहिए?','q.2':'मेरी सबसे बड़ी आदत क्या है?','q.3':'रात को देर से मुझे क्या खाने का मन करता है?','q.4':'मेरा पसंदीदा स्नैक या ड्रिंक क्या है?','q.5':'खाली समय में मैं क्या करता/करती हूँ?','q.6':'मेरी सबसे बड़ी कमज़ोरी क्या है?','q.7':'तनाव में मैं क्या करता/करती हूँ?','q.8':'जन्मदिन पर मुझे क्या गिफ़्ट चाहिए?',
+ 'quiz.whoGuess':'अंदाज़ा कौन लगा रहा है?','quiz.whoDesc':'अपना नाम लिखो ताकि {n} जान सकें कि तुम कौन हो।','quiz.yourName':'तुम्हारा नाम','quiz.start':'अंदाज़ा लगाना शुरू करो',
+ 'quiz.createdBy':'बनाने वाले','quiz.topic':'टॉपिक','quiz.progress':'सवाल {i} / {n}','quiz.next':'अगला','quiz.finish':'मेरा स्कोर देखो','quiz.score':'तुम्हारा स्कोर',
+ 'quiz.perfect':'तुम {n} को सबसे अच्छी तरह जानते हो।','quiz.ok':'ठीक है। जो गलत हुए उन्हें अगली बार देखो।','quiz.board':'स्क्वाड लीडरबोर्ड','quiz.noScores':'अभी कोई स्कोर नहीं। पहले तुम बनो।','quiz.again':'फिर से खेलो',
+ 'quiz.broken':'यह क्विज़ लिंक ख़राब लगता है।','quiz.removed':'यह क्विज़ नियम तोड़ने के कारण हटा दी गई।',
+ 'badge.1':'सर्टिफ़ाइड सोलमेट बेस्टी','badge.2':'राइड-ऑर-डाई दोस्त','badge.3':'पक्का स्क्वाड मेंबर','badge.4':'पार्ट-टाइम दोस्त',
+ 'v.title':'कौन ज़्यादा...?','v.desc':'2 से 8 लोग जोड़ो, थीम चुनो और वोट लिंक शेयर करो।','v.theme':'थीम','v.custom':'अपना टाइटल','v.customPh':'अपना टाइटल लिखो','v.name':'नाम','v.photo':'फ़ोटो','v.addPerson':'व्यक्ति जोड़ो','v.create':'वोट लिंक बनाओ',
+ 'v.t0':'बेस्ट वाइब','v.t1':'सबसे फ़नी','v.t2':'मेन कैरेक्टर एनर्जी','v.t3':'सबसे पहले भूलने वाला','v.t4':'ग्रुप का लीडर',
+ 'v.linkReady':'लिंक तैयार है','v.live':'तुम्हारा वोट लाइव है','v.open':'वोट खोलो','v.another':'एक और बनाओ','v.tap':'वोट देने के लिए नाम दबाओ। इस डिवाइस से एक बार ही वोट कर सकते हो।','v.thanks':'वोट देने के लिए धन्यवाद। नतीजे लाइव अपडेट होते हैं।','v.voteFor':'{n} को वोट दो','v.yours':'तुम्हारा वोट','v.votes':'वोट','v.squad':'स्क्वाड वोट',
+ 'share.ig':'Instagram स्टोरी पर शेयर करो','share.dl':'स्टोरी कार्ड डाउनलोड करो','share.wa':'WhatsApp पर शेयर करो','share.copy':'लिंक कॉपी करो','share.igNote':'Instagram स्टोरी में वेब पेज का लिंक स्वीकार नहीं करता। इमेज शेयर करो और लिंक को स्टिकर की तरह जोड़ो।',
+ 'story.cta':'अभी VibeClash पर खेलो','story.vote':'अभी VibeClash पर वोट करो','story.beat':'VibeClash पर मेरा स्कोर हराओ','story.tag':'खेलो। तुलना करो। वायरल हो जाओ।',
+ 'c.title':'संपर्क करें','c.desc':'सवाल, कॉपीराइट दावा या सुझाव? संदेश भेजो, हम 2 कार्यदिवसों में जवाब देंगे।','c.name':'नाम','c.email':'ईमेल','c.msg':'संदेश','c.send':'संदेश भेजो',
+ 'toast.copied':'लिंक कॉपी हो गया','toast.copyFail':'कॉपी नहीं हुआ। लिंक चुनकर कॉपी करो।','toast.saved':'स्टोरी कार्ड सेव हो गया। लिंक कॉपी हो गया।','toast.storage':'स्टोरेज भर गया है। एडमिन में कुछ कंटेंट हटाओ।',
+ 'toast.name':'अपना नाम लिखो','toast.banned':'पहले प्रतिबंधित शब्द हटाओ।','toast.photo':'यह फ़ोटो नहीं पढ़ी जा सकी। बिना फ़ोटो के आगे बढ़ रहे हैं।','toast.fillQ':'हर सवाल और 4 विकल्प भरो','toast.min':'कम से कम 3 सवाल चाहिए','toast.max':'अधिकतम 20 सवाल','toast.topic':'पहले टॉपिक लिखो','toast.voteTitle':'थीम का टाइटल लिखो','toast.min2':'कम से कम 2 लोग जोड़ो','toast.max8':'अधिकतम 8 लोग','toast.already':'तुम पहले ही वोट कर चुके हो','toast.enterName':'पहले अपना नाम लिखो','toast.diffName':'कोई दूसरा नाम चुनो।','toast.mail':'तुम्हारा ईमेल ऐप खुल रहा है','toast.adminNo':'एडमिन सेट नहीं है। कोड में ADMIN_SHA256 जोड़ो।','toast.wrongpw':'गलत पासवर्ड','toast.removed':'हटा दिया गया','toast.genOk':'ड्राफ़्ट तैयार है। शेयर करने से पहले जाँचो।',
+ 'o.broken':'यह वोट लिंक ख़राब लगता है।','o.removed':'यह वोट नियम तोड़ने के कारण हटा दिया गया।','o.back':'होम पर जाओ','o.oops':'ओह',
+ 'p.broken':'लिंक ख़राब है',
+ 'legal.about.t':'VibeClash के बारे में','legal.about.b':'<p>VibeClash एक मुफ़्त, बिना साइनअप वाली मनोरंजन साइट है। यहाँ AI टॉपिक क्विज़, दोस्तों की क्विज़, स्क्वाड वोट और शेयर करने योग्य स्टोरी कार्ड मिलते हैं। कोई भी खेल सकता है।</p>',
+ 'legal.priv.t':'प्राइवेसी पॉलिसी','legal.priv.b':'<p>यह बताती है कि VibeClash जानकारी कैसे संभालता है।</p><h2>तुम जो जानकारी देते हो</h2><p>नाम, फ़ोटो, क्विज़ के टॉपिक, सवाल, जवाब और वोट सिर्फ़ तुम्हारे पेज और कार्ड बनाने के लिए इस्तेमाल होते हैं। फ़ोटो इस्तेमाल से पहले ब्राउज़र में छोटी की जाती हैं।</p><h2>डेटा कहाँ रहता है</h2><p>डिफ़ॉल्ट रूप से क्विज़, वोट और स्कोर तुम्हारे ब्राउज़र में सेव होते हैं। शेयर किए गए लिंक में क्विज़ का डेटा होता है, इसलिए लिंक वाला कोई भी उसे देख सकता है। निजी जानकारी न डालो।</p><h2>कुकीज़ और विज्ञापन</h2><p>हम Google AdSense के विज्ञापन दिखा सकते हैं। Google और उसके साथी कुकीज़ (जिसमें DART कुकी भी है) इस्तेमाल करते हैं। निजी विज्ञापनों से बाहर निकलने के लिए Google Ads Settings या www.aboutads.info देखो।</p><h2>बच्चे</h2><p>VibeClash 13 साल और उससे ऊपर के उपयोगकर्ताओं के लिए है।</p>',
+ 'legal.terms.t':'नियम और शर्तें','legal.terms.b':'<h2>सेवा का उपयोग</h2><p>VibeClash का उपयोग निजी, गैर-व्यावसायिक मनोरंजन के लिए करो। इसे तोड़ने, स्क्रैप करने या ओवरलोड करने की कोशिश न करो।</p><h2>उपयोगकर्ता का कंटेंट</h2><p>तुम जो भी पोस्ट करते हो, उसकी जिम्मेदारी तुम्हारी है। किसी और की फ़ोटो इस्तेमाल करने से पहले अनुमति लो।</p><h2>प्रतिबंधित कंटेंट</h2><p>बुलिंग, उत्पीड़न, नफ़रत भरी बातें, धमकी, यौन या नग्न कंटेंट, बच्चों से जुड़ा कंटेंट, या किसी के अधिकारों का उल्लंघन मना है। नियम तोड़ने पर कंटेंट हटाया जा सकता है।</p><h2>AI से बना कंटेंट</h2><p>AI क्विज़ में गलतियाँ हो सकती हैं। शेयर करने से पहले क्रिएटर को जाँचना होगा।</p>',
+ 'legal.disc.t':'अस्वीकरण','legal.disc.b':'<p>VibeClash सिर्फ़ मनोरंजन के लिए है। स्कोर, बैज, वोट नतीजे और AI क्विज़ वैज्ञानिक माप, परीक्षा सामग्री या पेशेवर सलाह नहीं हैं। भरोसा करने से पहले तथ्य विश्वसनीय स्रोत से जाँचो।</p>'
+},
+mr:{
+ 'nav.quiz':'क्विझ','nav.vote':'मतदान','nav.trends':'ट्रेंड्स','nav.theme':'थीम','nav.lang':'भाषा',
+ 'hero.tag':'मित्रांच्या क्विझ · AI विषय क्विझ · स्क्वाड मतदान','hero.h':'खेळा. तुलना करा.','hero.hg':'व्हायरल व्हा.',
+ 'hero.sub':'स्वतःबद्दल क्विझ बनवा, किंवा कोणताही विषय लिहा आणि AI क्विझ तयार करू द्या. स्क्वाड मतदान सुरू करा. साइनअप नको. लिंक किंवा स्टोरी कार्ड शेअर करा.',
+ 'hero.quiz':'क्विझ सुरू करा','hero.vote':'स्क्वाड मतदान सुरू करा',
+ 'sec.quiz':'किती ओळखता?','sec.vote':'कोण जास्त...?','sec.trends':'ट्रेंडिंग बझ आणि बातम्या','sec.why':'मित्रांना हे का आवडते','sec.faq':'वारंवार विचारले जाणारे प्रश्न',
+ 'why.body':'मित्रांना तुम्ही किती ओळखता हे तपासणारी क्विझ मजा लगेच सुरू करते. मतदान वाद मिटवते. स्टोरी कार्ड निकाल सहज शेअर करू देतात.',
+ 'card.quiz':'स्वतःबद्दल क्विझ बनवा, किंवा कोणत्याही विषयावर AI ला लिहू द्या. मित्र अंदाज लावतील आणि बॅज व लाइव्ह लीडरबोर्डसह स्कोर मिळवतील.',
+ 'card.vote':'फोटोंसह 2 ते 8 मित्र जोडा, थीम निवडा आणि लिंक शेअर करा. बार लाइव्ह हलताना पहा.',
+ 'create':'क्विझ तयार करा','startVote':'स्क्वाड मतदान सुरू करा','allTrends':'सर्व ट्रेंड्स','play':'खेळा','open':'उघडा',
+ 'faq.q1':'खाते लागते का?','faq.a1':'नाही. साइनअप न करता तयार करा आणि खेळा.',
+ 'faq.q2':'फोटो सर्व्हरवर साठवले जातात का?','faq.a2':'फोटो ब्राउझरमध्ये लहान केले जातात आणि शेअर केलेल्या लिंकमध्ये समाविष्ट होतात. गोपनीयता धोरण पहा.',
+ 'faq.q3':'Instagram Stories वर शेअर करता येते का?','faq.a3':'होय. फोनवर Share to Instagram Story दाबा, किंवा इमेज डाउनलोड करून स्वतः पोस्ट करा.',
+ 'faq.q4':'हा नात्यांबद्दलचा सल्ला आहे का?','faq.a4':'नाही. VibeClash फक्त मनोरंजनासाठी आहे.',
+ 'foot.rights':'फक्त मनोरंजनासाठी.','foot.about':'आमच्याबद्दल','foot.contact':'संपर्क','foot.privacy':'गोपनीयता','foot.terms':'अटी','foot.disclaimer':'अस्वीकरण',
+ 'mode.title':'क्विझचा प्रकार निवडा','mode.self':'माझ्याबद्दल क्विझ','mode.selfd':'स्वतःबद्दल 8 प्रश्नांची उत्तरे द्या. मित्र अंदाज लावतील.','mode.ai':'AI विषय क्विझ','mode.aid':'कोणताही विषय लिहा. AI प्रश्न लिहील. शेअर करण्यापूर्वी सर्व काही बदला.',
+ 'mode.selfBtn':'माझ्याबद्दल क्विझ बनवा','mode.aiBtn':'AI विषय क्विझ बनवा',
+ 'b.title':'तुमची क्विझ तयार करा','b.name':'तुमचे नाव','b.photo':'फोटो (ऐच्छिक)','b.topic':'विषय','b.topicPh':'उदा. भारतीय इतिहास, क्रिकेट, Python बेसिक्स','b.count':'प्रश्नांची संख्या','b.diff':'काठिण्य पातळी','b.lang':'क्विझची भाषा','b.gen':'AI कडून तयार करा','b.genBusy':'तुमची क्विझ तयार होत आहे…','b.add':'प्रश्न जोडा','b.del':'काढा','b.create':'क्विझ लिंक तयार करा','b.q':'प्रश्न','b.opt':'पर्याय','b.correct':'बरोबर उत्तर','b.hint':'निवडलेला पर्याय बरोबर उत्तर आहे. सर्व काही बदलता येते.','b.min':'किमान 3 प्रश्न लागतील','b.tip':'AI चा निकाल मसुदा आहे. शेअर करण्यापूर्वी तथ्ये तपासा आणि बदला.',
+ 'easy':'सोपी','medium':'मध्यम','hard':'कठीण',
+ 'ai.noendpoint':'AI अजून जोडलेले नाही. प्रश्न स्वतः लिहा, किंवा AI endpoint जोडा.','ai.topic':'आधी विषय लिहा','ai.fail':'AI क्विझ तयार करू शकले नाही. पुन्हा प्रयत्न करा किंवा स्वतः बदला.',
+ 'q.1':'माझा मूड खराब असेल तर मला काय हवे असते?','q.2':'माझी सर्वात मोठी सवय कोणती आहे?','q.3':'रात्री उशिरा मला कशाची भूक लागते?','q.4':'माझा आवडता स्नॅक किंवा पेय कोणते?','q.5':'मोकळ्या वेळात मी काय करतो/करते?','q.6':'माझी सर्वात मोठी कमकुवत बाजू कोणती?','q.7':'तणावात मी काय करतो/करते?','q.8':'वाढदिवसाला मला कोणती भेट हवी असते?',
+ 'quiz.whoGuess':'अंदाज कोण लावत आहे?','quiz.whoDesc':'तुमचे नाव लिहा म्हणजे {n} यांना कळेल तुम्ही कोण आहात.','quiz.yourName':'तुमचे नाव','quiz.start':'अंदाज लावणे सुरू करा',
+ 'quiz.createdBy':'तयार केले','quiz.topic':'विषय','quiz.progress':'प्रश्न {i} / {n}','quiz.next':'पुढे','quiz.finish':'माझा स्कोर पहा','quiz.score':'तुमचा स्कोर',
+ 'quiz.perfect':'तुम्ही {n} यांना सर्वात चांगले ओळखता.','quiz.ok':'छान. चुकलेले प्रश्न पुढच्या वेळी तपासा.','quiz.board':'स्क्वाड लीडरबोर्ड','quiz.noScores':'अजून स्कोर नाही. पहिले तुम्ही व्हा.','quiz.again':'पुन्हा खेळा',
+ 'quiz.broken':'ही क्विझ लिंक खराब दिसते.','quiz.removed':'नियम मोडल्यामुळे ही क्विझ काढून टाकली गेली.',
+ 'badge.1':'सर्टिफाइड सोलमेट बेस्टी','badge.2':'राईड-ऑर-डाय दोस्त','badge.3':'पक्का स्क्वाड मेंबर','badge.4':'पार्ट-टाइम दोस्त',
+ 'v.title':'कोण जास्त...?','v.desc':'2 ते 8 लोक जोडा, थीम निवडा आणि मतदान लिंक शेअर करा.','v.theme':'थीम','v.custom':'स्वतःचे शीर्षक','v.customPh':'तुमचे शीर्षक लिहा','v.name':'नाव','v.photo':'फोटो','v.addPerson':'व्यक्ती जोडा','v.create':'मतदान लिंक तयार करा',
+ 'v.t0':'बेस्ट वाइब','v.t1':'सर्वात मजेदार','v.t2':'मेन कॅरेक्टर एनर्जी','v.t3':'सर्वात आधी विसरणारा','v.t4':'गटाचा लीडर',
+ 'v.linkReady':'लिंक तयार आहे','v.live':'तुमचे मतदान लाइव्ह आहे','v.open':'मतदान उघडा','v.another':'आणखी एक बनवा','v.tap':'मत देण्यासाठी नावावर टॅप करा. या डिव्हाइसवरून एकदाच मत देता येईल.','v.thanks':'मतदान केल्याबद्दल धन्यवाद. निकाल लाइव्ह अपडेट होतात.','v.voteFor':'{n} ला मत द्या','v.yours':'तुमचे मत','v.votes':'मते','v.squad':'स्क्वाड मतदान',
+ 'share.ig':'Instagram स्टोरीवर शेअर करा','share.dl':'स्टोरी कार्ड डाउनलोड करा','share.wa':'WhatsApp वर शेअर करा','share.copy':'लिंक कॉपी करा','share.igNote':'Instagram स्टोरीमध्ये वेब पेजची लिंक चालत नाही. इमेज शेअर करा आणि लिंक स्टिकर म्हणून जोडा.',
+ 'story.cta':'आत्ताच VibeClash वर खेळा','story.vote':'आत्ताच VibeClash वर मत द्या','story.beat':'VibeClash वर माझा स्कोर हरवा','story.tag':'खेळा. तुलना करा. व्हायरल व्हा.',
+ 'c.title':'संपर्क करा','c.desc':'प्रश्न, कॉपीराइट दावा किंवा अभिप्राय? संदेश पाठवा, 2 कार्यदिवसांत उत्तर मिळेल.','c.name':'नाव','c.email':'ईमेल','c.msg':'संदेश','c.send':'संदेश पाठवा',
+ 'toast.copied':'लिंक कॉपी झाली','toast.copyFail':'कॉपी झाले नाही. लिंक निवडून कॉपी करा.','toast.saved':'स्टोरी कार्ड सेव्ह झाले. लिंक कॉपी झाली.','toast.storage':'स्टोरेज भरले आहे. अॅडमिनमध्ये काही कंटेंट काढा.',
+ 'toast.name':'तुमचे नाव लिहा','toast.banned':'आधी प्रतिबंधित शब्द काढा.','toast.photo':'तो फोटो वाचता आला नाही. फोटोशिवाय पुढे जात आहे.','toast.fillQ':'प्रत्येक प्रश्न आणि 4 पर्याय भरा','toast.min':'किमान 3 प्रश्न लागतील','toast.max':'जास्तीत जास्त 20 प्रश्न','toast.topic':'आधी विषय लिहा','toast.voteTitle':'थीमचे शीर्षक लिहा','toast.min2':'किमान 2 लोक जोडा','toast.max8':'जास्तीत जास्त 8 लोक','toast.already':'तुम्ही आधीच मत दिले आहे','toast.enterName':'आधी तुमचे नाव लिहा','toast.diffName':'दुसरे नाव निवडा.','toast.mail':'तुमचे ईमेल अॅप उघडत आहे','toast.adminNo':'अॅडमिन सेट केलेले नाही. कोडमध्ये ADMIN_SHA256 जोडा.','toast.wrongpw':'चुकीचा पासवर्ड','toast.removed':'काढले','toast.genOk':'मसुदा तयार आहे. शेअर करण्यापूर्वी तपासा.',
+ 'o.broken':'ही मतदान लिंक खराब दिसते.','o.removed':'नियम मोडल्यामुळे हे मतदान काढून टाकले गेले.','o.back':'मुखपृष्ठावर जा','o.oops':'अरेरे',
+ 'p.broken':'लिंक खराब आहे',
+ 'legal.about.t':'VibeClash बद्दल','legal.about.b':'<p>VibeClash ही मोफत, साइनअप नसलेली मनोरंजन साइट आहे. येथे AI विषय क्विझ, मित्रांच्या क्विझ, स्क्वाड मतदान आणि शेअर करता येणारी स्टोरी कार्डे मिळतात. कोणीही खेळू शकतो.</p>',
+ 'legal.priv.t':'गोपनीयता धोरण','legal.priv.b':'<p>VibeClash माहिती कशी हाताळते हे हे धोरण सांगते.</p><h2>तुम्ही दिलेली माहिती</h2><p>नावे, फोटो, क्विझचे विषय, प्रश्न, उत्तरे आणि मते फक्त तुम्ही तयार केलेली पाने व कार्डे बनवण्यासाठी वापरली जातात. फोटो वापरण्यापूर्वी ब्राउझरमध्ये लहान केले जातात.</p><h2>डेटा कुठे साठवला जातो</h2><p>डीफॉल्टनुसार क्विझ, मते आणि स्कोर तुमच्या ब्राउझरमध्ये साठवले जातात. शेअर केलेल्या लिंकमध्ये क्विझचा डेटा असतो, त्यामुळे लिंक असलेला कोणीही तो पाहू शकतो. खाजगी माहिती टाकू नका.</p><h2>कुकीज आणि जाहिराती</h2><p>आम्ही Google AdSense च्या जाहिराती दाखवू शकतो. Google आणि तिचे भागीदार DART कुकीसह कुकीज वापरतात. वैयक्तिकृत जाहिरातींमधून बाहेर पडण्यासाठी Google Ads Settings किंवा www.aboutads.info पहा.</p><h2>मुले</h2><p>VibeClash 13 वर्षे आणि त्यावरील वापरकर्त्यांसाठी आहे.</p>',
+ 'legal.terms.t':'अटी व शर्ती','legal.terms.b':'<h2>सेवेचा वापर</h2><p>VibeClash चा वापर वैयक्तिक, व्यावसायिक नसलेल्या मनोरंजनासाठी करा. ते तोडण्याचा, स्क्रॅप करण्याचा किंवा ओव्हरलोड करण्याचा प्रयत्न करू नका.</p><h2>वापरकर्त्याचा कंटेंट</h2><p>तुम्ही पोस्ट केलेल्या सर्व गोष्टींची जबाबदारी तुमची आहे. दुसऱ्याचा फोटो वापरण्यापूर्वी परवानगी घ्या.</p><h2>प्रतिबंधित कंटेंट</h2><p>बुलिंग, छळ, द्वेषपूर्ण भाषा, धमक्या, लैंगिक किंवा नग्न कंटेंट, अल्पवयीन व्यक्तींशी संबंधित कंटेंट, किंवा इतरांच्या हक्कांचे उल्लंघन करणारा कंटेंट मनाई आहे. नियम मोडल्यास कंटेंट काढला जाऊ शकतो.</p><h2>AI ने तयार केलेला कंटेंट</h2><p>AI क्विझमध्ये चुका असू शकतात. शेअर करण्यापूर्वी क्रिएटरने तो तपासावा.</p>',
+ 'legal.disc.t':'अस्वीकरण','legal.disc.b':'<p>VibeClash फक्त मनोरंजनासाठी आहे. स्कोर, बॅज, मतदान निकाल आणि AI क्विझ हे वैज्ञानिक मोजमाप, परीक्षेचे साहित्य किंवा व्यावसायिक सल्ला नाहीत. विसंबण्यापूर्वी विश्वसनीय स्रोतांकडून तथ्ये तपासा.</p>'
+}};
+let LANG = 'en';
+function t(k, vars){
+  let s = (I18N[LANG] && I18N[LANG][k]) ?? I18N.en[k] ?? k;
+  if(vars) for(const [a,b] of Object.entries(vars)) s = s.replace('{'+a+'}', b);
+  return s;
+}
+
+/* ================= HELPERS ================= */
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v) }catch{ return d } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)) }catch{ toast(t('toast.storage')) } }
+  // DATA LAYER: replace get/set with Supabase or Firebase calls to share results across devices.
+};
+const DEF = {
+  sections:[
+    {id:'s1',type:'quiz',titleKey:'sec.quiz',title:'',body:'',visible:true},
+    {id:'s2',type:'vote',titleKey:'sec.vote',title:'',body:'',visible:true},
+    {id:'s3',type:'trends',titleKey:'sec.trends',title:'',body:'',visible:true},
+    {id:'s4',type:'text',titleKey:'sec.why',title:'',bodyKey:'why.body',body:'',visible:true}
+  ],
+  banned:[], contactEmail:'hello@yourdomain.com',
+  adsense:{enabled:false,client:'',slots:{top:'',inFeed:'',result:''},on:{top:true,inFeed:true,result:true}}
+};
+const DEF_TRENDS = [
+  {id:'t1',cat:'Challenge',head:'The 3-second friend test',sum:"Guess your bestie's answer before they blink. Post your score and tag two friends.",tags:['challenge','friends'],link:'#/quiz/new',feat:true,img:''},
+  {id:'t2',cat:'Battle',head:'Sabse Funny: who gets the laugh?',sum:'Add your group, pick the funniest friend and see where the squad votes.',tags:['battle'],link:'#/vote/new',feat:false,img:''},
+  {id:'t3',cat:'Pop Culture',head:'Your comfort show of the week',sum:'Everyone is rewatching childhood favourites. Make a quiz on yours.',tags:['tv','nostalgia'],link:'#/quiz/new',feat:false,img:''}
+];
+const REACTS = ['🔥','😂','❤️','🤯'];
+function settings(){ const s=store.get('vc_settings',null); return s ? {...structuredClone(DEF), ...s} : structuredClone(DEF) }
+function saveSettings(s){ store.set('vc_settings',s) }
+function trendsData(){ return store.get('vc_trends', DEF_TRENDS) }
+function ok(x){ const low=String(x).toLowerCase(); return !settings().banned.some(w=>w && low.includes(w.toLowerCase())) }
+function toast(m){ const el=$('#toast'); el.textContent=m; el.classList.add('show'); clearTimeout(el._h); el._h=setTimeout(()=>el.classList.remove('show'),2800) }
+function uid(){ return Math.random().toString(36).slice(2,9) }
+function ini(n){ return (n||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase() }
+function avatar(src,name){ return src ? `<img class="av" src="${src}" alt="${esc(name)}">` : `<div class="av" aria-label="${esc(name)}">${esc(ini(name))}</div>` }
+function hid(s){ let h=5381; for(const c of s) h=(Math.imul(h,33)^c.charCodeAt(0))>>>0; return h.toString(36) }
+function enc(o){ let s=''; new TextEncoder().encode(JSON.stringify(o)).forEach(x=>s+=String.fromCharCode(x)); return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'') }
+function dec(s){ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4) s+='='; return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))) }
+function shareUrl(path){ return location.origin + location.pathname + path }
+function badgeFor(s){ return t(s>=90?'badge.1':s>=70?'badge.2':s>=50?'badge.3':'badge.4') }
+function isBlocked(id){ return store.get('vc_blocked',[]).includes(id) }
+function saveCreated(item){ const c=store.get('vc_created',[]); if(!c.some(x=>x.id===item.id)){ c.unshift(item); store.set('vc_created',c.slice(0,200)) } }
+function thumb(file,size){ return new Promise((res,rej)=>{ const url=URL.createObjectURL(file); const img=new Image(); img.onload=()=>{ const s=Math.min(img.width,img.height), c=document.createElement('canvas'); c.width=c.height=size; c.getContext('2d').drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,size,size); URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg',.7)) }; img.onerror=()=>{ URL.revokeObjectURL(url); rej(new Error('bad image')) }; img.src=url }) }
+function loadImg(src){ return new Promise(r=>{ if(!src) return r(null); const i=new Image(); i.onload=()=>r(i); i.onerror=()=>r(null); i.src=src }) }
+function confetti(){ const cols=['#7C3AED','#EC4899','#06B6D4','#FACC15']; for(let i=0;i<70;i++){ const d=document.createElement('i'); d.className='confetti'; d.style.left=Math.random()*100+'vw'; d.style.background=cols[i%4]; d.style.animationDuration=(1.8+Math.random()*1.6)+'s'; d.style.animationDelay=Math.random()*.4+'s'; document.body.appendChild(d); setTimeout(()=>d.remove(),4200) } }
+function copyText(x){ (navigator.clipboard?navigator.clipboard.writeText(x):Promise.reject()).then(()=>toast(t('toast.copied'))).catch(()=>toast(t('toast.copyFail'))) }
+function page(inner){ return `<section class="wrap" style="padding-top:28px">${inner}</section>` }
+function notFound(msg){ return page(`<div class="glass"><h2>${t('o.oops')}</h2><p style="color:var(--mut)">${esc(msg)}</p><a class="btn" href="#/">${t('o.back')}</a></div>`) }
+function board(key){ const rows=store.get(key,[]).slice().sort((a,b)=>b.s-a.s||a.d-b.d).slice(0,10); return rows.length ? `<ol style="padding-left:20px;margin:0">${rows.map(r=>`<li style="margin:8px 0;display:flex;justify-content:space-between;gap:12px"><span>${esc(r.n)}</span><b>${r.s}%</b></li>`).join('')}</ol>` : `<p style="color:var(--mut)">${t('quiz.noScores')}</p>` }
+function ad(slot){ const a=settings().adsense; if(!a.enabled||!a.client||!a.on[slot]||!a.slots[slot]) return ''; return `<div class="ad" style="min-height:${slot==='result'?280:110}px"><span class="ad-label">Advertisement</span><ins class="adsbygoogle" style="display:block" data-ad-client="${esc(a.client)}" data-ad-slot="${esc(a.slots[slot])}" data-ad-format="auto" data-full-width-responsive="true"></ins></div>` }
+function afterRender(){
+  const a=settings().adsense;
+  if(a.enabled&&a.client&&!$('#adsense-js')){ const sc=document.createElement('script'); sc.id='adsense-js'; sc.async=true; sc.crossOrigin='anonymous'; sc.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='+encodeURIComponent(a.client); document.head.appendChild(sc) }
+  document.querySelectorAll('ins.adsbygoogle:not([data-adsbygoogle-status])').forEach(()=>{ try{ (window.adsbygoogle=window.adsbygoogle||[]).push({}) }catch{} });
+}
+
+/* ================= STORY CARD ================= */
+function rr(x,a,b,w,h,r){ x.beginPath(); x.moveTo(a+r,b); x.arcTo(a+w,b,a+w,b+h,r); x.arcTo(a+w,b+h,a,b+h,r); x.arcTo(a,b+h,a,b,r); x.arcTo(a,b,a+w,b,r); x.closePath() }
+function wrapText(x,txt,cx,y,max,lh){ const words=String(txt).split(' '); let line=''; for(const w of words){ const test=line?line+' '+w:w; if(x.measureText(test).width>max&&line){ x.fillText(line,cx,y); line=w; y+=lh } else line=test } x.fillText(line,cx,y); return y }
+const FONT_STACK = "Outfit, Inter, 'Noto Sans Devanagari', system-ui, sans-serif";
+async function buildStory({kicker,title,rows,foot}){
+  const c=$('#story'), x=c.getContext('2d'); c.width=1080; c.height=1920;
+  const g=x.createLinearGradient(0,0,1080,1920); g.addColorStop(0,'#7C3AED'); g.addColorStop(.5,'#EC4899'); g.addColorStop(1,'#06B6D4');
+  x.fillStyle=g; x.fillRect(0,0,1080,1920);
+  x.fillStyle='rgba(10,6,20,.55)'; rr(x,60,280,960,1300,56); x.fill();
+  x.textAlign='center'; x.fillStyle='#fff';
+  x.font='800 64px '+FONT_STACK; x.fillText('VibeClash',540,200);
+  x.font="600 40px Inter, 'Noto Sans Devanagari', system-ui"; x.fillStyle='rgba(255,255,255,.85)'; x.fillText(kicker||'',540,340);
+  x.fillStyle='#fff'; x.font='800 80px '+FONT_STACK; const endY=wrapText(x,title||'',540,440,880,94);
+  const top=Math.max(endY+90,600), sp=rows.length?Math.min(170,Math.floor((1400-top)/rows.length)):0, rad=Math.min(56,sp/2-8);
+  let y=top;
+  for(const r of rows.slice(0,8)){
+    const img=await loadImg(r.img), cy=y+sp/2-8;
+    x.save(); x.beginPath(); x.arc(170,cy,rad,0,Math.PI*2); x.clip();
+    if(img) x.drawImage(img,170-rad,cy-rad,rad*2,rad*2); else { x.fillStyle='#7C3AED'; x.fillRect(100,cy-rad,rad*2+20,rad*2); x.fillStyle='#fff'; x.font='700 40px '+FONT_STACK; x.textAlign='center'; x.fillText(ini(r.name),170,cy+14) }
+    x.restore();
+    x.textAlign='left'; x.fillStyle='#fff'; x.font="700 42px Inter, 'Noto Sans Devanagari', system-ui"; x.fillText((r.name||'').slice(0,18)+(r.crown?' 👑':''),260,cy-4);
+    x.fillStyle='rgba(255,255,255,.2)'; rr(x,260,cy+12,600,26,13); x.fill();
+    x.fillStyle='#fff'; rr(x,260,cy+12,Math.max(26,600*r.pct/100),26,13); x.fill();
+    x.textAlign='right'; x.font='800 46px '+FONT_STACK; x.fillText(r.pct+'%',900,cy-4); x.textAlign='left';
+    y+=sp;
+  }
+  x.fillStyle='#fff'; rr(x,120,1500,840,150,50); x.fill();
+  x.fillStyle='#1A1433'; x.textAlign='center'; x.font='800 46px '+FONT_STACK; x.fillText(foot||t('story.cta'),540,1590);
+  x.fillStyle='#fff'; x.font="600 40px Inter, 'Noto Sans Devanagari', system-ui"; x.fillText(t('story.tag'),540,1740);
+  return new Promise(res=>c.toBlob(res,'image/png'));
+}
+let LAST=null;
+function sharePanel(url,msg,story){
+  LAST={...story,url,msg};
+  return `<div class="glass"><h3>${t('share.dl')}</h3>
+    <div class="row">
+      <button class="btn" data-act="story" data-mode="share">${t('share.ig')}</button>
+      <button class="btn ghost" data-act="story" data-mode="download">${t('share.dl')}</button>
+      <a class="btn ghost" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msg+' '+url)}">${t('share.wa')}</a>
+      <button class="btn ghost" data-act="copy" data-url="${esc(url)}">${t('share.copy')}</button>
+    </div>
+    <p style="font-size:13px;color:var(--mut)">${t('share.igNote')}</p></div>`;
+}
+async function storyShare(mode){
+  if(!LAST) return;
+  const blob=await buildStory(LAST);
+  const file=new File([blob],'vibeclash-story.png',{type:'image/png'});
+  if(mode==='share' && navigator.canShare && navigator.canShare({files:[file]})){
+    try{ await navigator.share({files:[file],text:LAST.msg,title:'VibeClash'}); return }catch(e){ if(e.name==='AbortError') return }
+  }
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='vibeclash-story.png'; a.click();
+  navigator.clipboard?.writeText(LAST.url).catch(()=>{});
+  toast(t('toast.saved'));
+}
+function continueBar(){ return `<div class="glass"><h3 style="font-size:20px">${t('hero.quiz')}</h3><div class="row"><a class="btn ghost sm" href="#/trends">${t('nav.trends')}</a><a class="btn ghost sm" href="#/vote/new">${t('startVote')}</a><a class="btn sm" href="#/quiz/new">${t('create')}</a></div></div>` }
+
+/* ================= CHROME (header/footer, language) ================= */
+function chrome(){
+  $('#header').innerHTML = `<a class="brand" href="#/" aria-label="VibeClash">
+      <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="14" width="26" height="34" rx="7" fill="#7C3AED" transform="rotate(-8 19 31)"/><rect x="32" y="14" width="26" height="34" rx="7" fill="#EC4899" opacity=".9" transform="rotate(8 45 31)"/><path d="M36 4 22 34h9l-4 26 15-32h-9z" fill="#06B6D4" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>VibeClash</a>
+    <nav class="links"><a href="#/quiz/new">${t('nav.quiz')}</a><a href="#/vote/new">${t('nav.vote')}</a><a href="#/trends">${t('nav.trends')}</a></nav>
+    <select id="langsel" aria-label="${t('nav.lang')}">${Object.entries(LANGS).map(([k,v])=>`<option value="${k}" ${k===LANG?'selected':''}>${v.label}</option>`).join('')}</select>
+    <button class="btn ghost sm" data-act="theme" aria-label="${t('nav.theme')}">${t('nav.theme')}</button>`;
+  $('#footer').innerHTML = `<span>&copy; ${new Date().getFullYear()} VibeClash. ${t('foot.rights')}</span>
+    <span class="row"><a href="#/about">${t('foot.about')}</a><a href="#/contact">${t('foot.contact')}</a><a href="#/privacy">${t('foot.privacy')}</a><a href="#/terms">${t('foot.terms')}</a><a href="#/disclaimer">${t('foot.disclaimer')}</a></span>`;
+  document.documentElement.lang = LANG;
+}
+
+/* ================= HOME ================= */
+function trendCard(x,rx){
+  const link = x.link ? (x.link.startsWith('#/') ? `<a class="btn ghost sm" href="${esc(x.link)}">${t('play')}</a>` : `<a class="btn ghost sm" target="_blank" rel="noopener" href="${esc(x.link)}">${t('open')}</a>`) : '';
+  return `<article class="glass" style="margin-top:0">${x.img?`<img src="${esc(x.img)}" alt="" style="width:100%;border-radius:14px;max-height:180px;object-fit:cover;margin-bottom:10px">`:''}
+    <span class="pill">${esc(x.cat)}</span><h3 style="margin-top:10px;font-size:22px">${esc(x.head)}</h3><p style="color:var(--mut)">${esc(x.sum)}</p>
+    <div class="row" style="margin-top:8px">${REACTS.map(e=>`<button class="btn ghost sm" data-act="react" data-id="${esc(x.id)}" data-e="${e}">${e} ${((rx[x.id]||{})[e])||0}</button>`).join('')}</div>
+    <div class="row" style="margin-top:10px">${link}</div></article>`;
+}
+const secTitle = x => x.titleKey ? t(x.titleKey) : x.title;
+const secBodyText = x => x.bodyKey ? t(x.bodyKey) : x.body;
+function secBody(x){
+  if(x.type==='quiz') return `<div class="glass"><p style="color:var(--mut)">${t('card.quiz')}</p><a class="btn" href="#/quiz/new">${t('create')}</a></div>`;
+  if(x.type==='vote') return `<div class="glass"><p style="color:var(--mut)">${t('card.vote')}</p><a class="btn" href="#/vote/new">${t('startVote')}</a></div>`;
+  if(x.type==='trends'){ const rx=store.get('vc_react',{}); return `<div class="grid three">${trendsData().slice(0,3).map(z=>trendCard(z,rx)).join('')}</div><a class="btn ghost sm" href="#/trends" style="margin-top:14px">${t('allTrends')}</a>` }
+  return `<div class="glass prose"><p class="pre">${esc(secBodyText(x))}</p></div>`;
+}
+function faq(){ return `<section style="margin-top:48px"><h2>${t('sec.faq')}</h2>${[1,2,3,4].map(i=>`<details><summary>${t('faq.q'+i)}</summary><p style="color:var(--mut)">${t('faq.a'+i)}</p></details>`).join('')}</section>` }
+function home(){
+  const s=settings(), vis=s.sections.filter(x=>x.visible);
+  const body=vis.map((x,i)=>`<section style="margin-top:44px"><h2>${esc(secTitle(x))}</h2>${secBody(x)}</section>${i===0?ad('inFeed'):''}`).join('');
+  return `<section class="hero"><div class="wrap">
+      <span class="pill">${t('hero.tag')}</span>
+      <h1 style="margin-top:16px">${t('hero.h')} <span class="grad">${t('hero.hg')}</span></h1>
+      <p style="color:var(--mut);max-width:600px;margin:14px auto 22px;font-size:18px">${t('hero.sub')}</p>
+      <div class="row" style="justify-content:center"><a class="btn" href="#/quiz/new">${t('hero.quiz')}</a><a class="btn ghost" href="#/vote/new">${t('hero.vote')}</a></div>
+    </div></section>
+    <div class="wrap">${ad('top')}${body}${faq()}</div>`;
+}
+function trendsView(){ const rx=store.get('vc_react',{}); return page(`<h1>${t('sec.trends')}</h1><div class="grid three" style="margin-top:14px">${trendsData().map(z=>trendCard(z,rx)).join('')}</div>${ad('inFeed')}`) }
+
+/* ================= QUIZ CREATION ================= */
+let DRAFT=null;
+function quizNew(){
+  return page(`<h1>${t('mode.title')}</h1>
+  <div class="grid two">
+    <div class="glass" style="margin-top:0"><h3>${t('mode.self')}</h3><p style="color:var(--mut)">${t('mode.selfd')}</p><a class="btn" href="#/quiz/build?mode=self">${t('mode.selfBtn')}</a></div>
+    <div class="glass" style="margin-top:0"><span class="pill">AI</span><h3 style="margin-top:8px">${t('mode.ai')}</h3><p style="color:var(--mut)">${t('mode.aid')}</p><a class="btn" href="#/quiz/build?mode=ai">${t('mode.aiBtn')}</a></div>
+  </div>`);
+}
+function blankQs(n){ return Array.from({length:n},()=>['',['','','',''],0]) }
+function quizBuild(params){
+  const mode=params.get('mode')==='ai'?'ai':'self';
+  if(!DRAFT||DRAFT.mode!==mode){
+    DRAFT={mode,name:'',a:'',tp:'',count:8,diff:'medium',lg:LANG,
+      qs: mode==='self' ? Array.from({length:8},(_,i)=>[t('q.'+(i+1)),['','','',''],0]) : blankQs(5)};
+  }
+  const qs=DRAFT.qs;
+  const ai = mode==='ai';
+  const head = `<h1>${t('b.title')} <span class="grad">${ai?'AI':''}</span></h1>`;
+  const top = `<div class="glass"><div class="grid two"><div><label for="bn">${t('b.name')}</label><input id="bn" data-f="name" value="${esc(DRAFT.name)}" maxlength="24"></div>
+    <div><label for="bl">${t('b.lang')}</label><select id="bl" data-f="lg">${Object.entries(LANGS).map(([k,v])=>`<option value="${k}" ${DRAFT.lg===k?'selected':''}>${v.name}</option>`).join('')}</select></div></div>
+    ${ai ? `<label for="bt">${t('b.topic')}</label><input id="bt" data-f="tp" value="${esc(DRAFT.tp)}" maxlength="120" placeholder="${esc(t('b.topicPh'))}">
+      <div class="grid two"><div><label for="bc">${t('b.count')}</label><select id="bc" data-f="count">${[5,8,10,15,20].map(n=>`<option ${DRAFT.count===n?'selected':''}>${n}</option>`).join('')}</select></div>
+      <div><label for="bd">${t('b.diff')}</label><select id="bd" data-f="diff">${['easy','medium','hard'].map(d=>`<option value="${d}" ${DRAFT.diff===d?'selected':''}>${t(d)}</option>`).join('')}</select></div></div>
+      <button class="btn" data-act="ai-gen" style="margin-top:16px;width:100%" ${DRAFT.busy?'disabled':''}>${DRAFT.busy?t('b.genBusy'):t('b.gen')}</button>
+      <p style="font-size:13px;color:var(--mut);margin-top:8px">${t('b.tip')}</p>`
+      : `<label for="bp">${t('b.photo')}</label><input id="bp" type="file" accept="image/*" data-f="photo">`}
+  </div>`;
+  const list = qs.map((q,i)=>`<div class="qcard"><div class="row" style="justify-content:space-between"><b>${t('b.q')} ${i+1}</b><button class="btn ghost sm" data-act="q-del" data-i="${i}" ${qs.length<=3?'disabled':''}>${t('b.del')}</button></div>
+    <input data-f="q" data-i="${i}" value="${esc(q[0])}" maxlength="160" style="margin-top:8px" aria-label="${t('b.q')} ${i+1}">
+    <div class="opts">${[0,1,2,3].map(j=>`<label><input type="radio" name="c${i}" data-f="c" data-i="${i}" data-j="${j}" ${q[2]===j?'checked':''} style="width:auto" aria-label="${t('b.correct')} ${'ABCD'[j]}"><input data-f="o" data-i="${i}" data-j="${j}" value="${esc(q[1][j]||'')}" placeholder="${t('b.opt')} ${'ABCD'[j]}" maxlength="80" aria-label="${t('b.opt')} ${'ABCD'[j]}"></label>`).join('')}</div></div>`).join('');
+  return page(`${head}${top}${list}
+    <div class="row" style="margin-top:14px"><button class="btn ghost" data-act="q-add" ${qs.length>=20?'disabled':''}>${t('b.add')}</button></div>
+    <p style="font-size:13px;color:var(--mut);margin-top:10px">${t('b.hint')}</p>
+    <button class="btn" data-act="q-create" style="margin-top:14px;width:100%">${t('b.create')}</button>`);
+}
+async function genAI(){
+  if(!CFG.AI_ENDPOINT) return toast(t('ai.noendpoint'));
+  if(!DRAFT.tp.trim()) return toast(t('toast.topic'));
+  DRAFT.busy=true; route();
+  try{
+    const r=await fetch(CFG.AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic:DRAFT.tp.trim(),count:DRAFT.count,difficulty:DRAFT.diff,language:LANGS[DRAFT.lg].name})});
+    if(!r.ok) throw new Error('bad status');
+    const j=await r.json();
+    const items=(j.questions||[]).filter(x=>x && x.q && Array.isArray(x.options) && x.options.length===4 && Number.isInteger(x.answer) && x.answer>=0 && x.answer<4);
+    if(items.length<3) throw new Error('too few');
+    DRAFT.qs=items.map(x=>[String(x.q),x.options.map(String),x.answer]).filter(([q,o])=>ok(q)&&o.every(ok));
+    toast(t('toast.genOk'));
+  }catch{ toast(t('ai.fail')) }
+  finally{ DRAFT.busy=false; route() }
+}
+function submitQuizDraft(){
+  const name=DRAFT.name.trim();
+  if(!name) return toast(t('toast.name'));
+  if(DRAFT.qs.length<3) return toast(t('toast.min'));
+  for(const [q,o] of DRAFT.qs){ if(!q.trim()||o.some(x=>!String(x).trim())) return toast(t('toast.fillQ')) }
+  const all=[name,DRAFT.tp,...DRAFT.qs.flatMap(([q,o])=>[q,...o])];
+  if(!all.every(ok)) return toast(t('toast.banned'));
+  const data={n:name,a:DRAFT.a,tp:DRAFT.mode==='ai'?DRAFT.tp.trim():'',lg:DRAFT.lg,q:DRAFT.qs.map(([q,o,c])=>[q.trim(),o.map(x=>String(x).trim()),c])};
+  const id=hid(JSON.stringify(data));
+  saveCreated({id,type:'quiz',title:`${name}: ${data.tp||'quiz'}`,at:Date.now()});
+  const url=shareUrl('#/quiz/play?d='+enc(data));
+  DRAFT=null;
+  show(page(`<span class="pill">${t('v.linkReady')}</span><h1 style="margin-top:12px">${t('v.live')}</h1>
+    ${sharePanel(url,`${t('story.cta')}: ${url}`,{kicker:data.tp||t('sec.quiz'),title:`${name}`,rows:[],foot:t('story.cta')})}
+    <div class="row" style="margin-top:14px"><a class="btn ghost" href="${esc(url)}">${t('play')}</a><a class="btn ghost" href="#/quiz/new">${t('v.another')}</a></div>`));
+}
+function show(html){ $('#app').innerHTML=html; afterRender(); window.scrollTo(0,0) }
+
+/* ================= QUIZ PLAY ================= */
+let QP=null;
+function quizPlay(params){
+  let data; try{ data=dec(params.get('d')||'') }catch{ return notFound(t('quiz.broken')) }
+  if(!data||!Array.isArray(data.q)) return notFound(t('quiz.broken'));
+  const id=hid(JSON.stringify(data));
+  if(isBlocked(id)) return notFound(t('quiz.removed'));
+  if(!QP||QP.id!==id) QP={id,data,name:'',step:-1,ans:[],saved:false,score:0};
+  const {n,a,q,tp}=data;
+  const head=`<div class="row" style="margin-bottom:6px">${avatar(a,n)}<div><span class="pill">${t('quiz.createdBy')}</span><h2 style="margin:6px 0 0">${esc(n)}</h2>${tp?`<span class="pill" style="margin-top:6px">${t('quiz.topic')}: ${esc(tp)}</span>`:''}</div></div>`;
+  let body;
+  if(QP.step<0){
+    body=`<div class="glass"><h3>${t('quiz.whoGuess')}</h3><p style="color:var(--mut)">${t('quiz.whoDesc',{n:esc(n)})}</p><label for="fname">${t('quiz.yourName')}</label><input id="fname" maxlength="24"><button class="btn" data-act="quiz-name" style="margin-top:14px;width:100%">${t('quiz.start')}</button></div>`;
+  } else if(QP.step<q.length){
+    const [qq,opts]=q[QP.step], cur=QP.ans[QP.step];
+    body=`<div class="glass"><span class="pill">${t('quiz.progress',{i:QP.step+1,n:q.length})}</span><div class="bar" style="margin:12px 0 16px"><i style="width:${QP.step/q.length*100}%"></i></div><h3>${esc(qq)}</h3>${opts.map((o,j)=>`<button class="opt${cur===j?' on':''}" data-act="quiz-pick" data-j="${j}">${esc(o)}</button>`).join('')}<button class="btn" data-act="quiz-next" style="margin-top:14px;width:100%" ${cur==null?'disabled':''}>${QP.step===q.length-1?t('quiz.finish'):t('quiz.next')}</button></div>`;
+  } else {
+    if(!QP.saved){
+      QP.score=Math.round(q.reduce((s,[,,c],i)=>s+(QP.ans[i]===c?1:0),0)/q.length*100);
+      QP.saved=true;
+      const rows=store.get('vc_qres_'+id,[]); rows.push({n:QP.name,s:QP.score,d:Date.now()}); store.set('vc_qres_'+id,rows.slice(-200));
+      if(QP.score>=70) setTimeout(confetti,50);
+    }
+    const url=shareUrl('#/quiz/play?d='+enc(data));
+    body=`<div class="glass" style="text-align:center"><span class="pill">${t('quiz.score')}</span><div class="grad" style="font:800 76px Outfit,sans-serif;margin:8px 0">${QP.score}%</div><h3>${esc(badgeFor(QP.score))}</h3><p style="color:var(--mut)">${QP.score===100?t('quiz.perfect',{n:esc(n)}):t('quiz.ok')}</p></div>`
+      + sharePanel(url,`${QP.score}% · ${n} · VibeClash`,{kicker:`${QP.name} vs ${n}`,title:badgeFor(QP.score),rows:[{name:QP.name,pct:QP.score}],foot:t('story.beat')})
+      + `<div class="glass"><h3>${t('quiz.board')}</h3>${board('vc_qres_'+id)}</div>`
+      + `<div class="row" style="margin-top:14px"><button class="btn ghost" data-act="quiz-again">${t('quiz.again')}</button></div>`
+      + continueBar() + ad('result');
+  }
+  return page(head+body);
+}
+
+/* ================= VOTE ================= */
+function prow(){ return `<div class="row prow" style="margin-top:10px"><input class="pname" placeholder="${t('v.name')}" maxlength="20" aria-label="${t('v.name')}" style="flex:1;min-width:140px"><input class="pphoto" type="file" accept="image/*" aria-label="${t('v.photo')}" style="flex:1;min-width:160px"></div>` }
+function voteNew(){
+  return page(`<h1>${t('v.title')}</h1><p style="color:var(--mut)">${t('v.desc')}</p>
+  <form id="vform" class="glass">
+    <label for="vt">${t('v.theme')}</label>
+    <select id="vt" name="theme">${[0,1,2,3,4].map(i=>`<option value="${i}">${t('v.t'+i)}</option>`).join('')}<option value="custom">${t('v.custom')}</option></select>
+    <input name="custom" id="vc" placeholder="${t('v.customPh')}" maxlength="40" style="margin-top:8px;display:none" aria-label="${t('v.custom')}">
+    <div id="people" style="margin-top:12px">${prow()}${prow()}</div>
+    <div class="row" style="margin-top:12px"><button type="button" class="btn ghost sm" data-act="vote-add">${t('v.addPerson')}</button></div>
+    <button class="btn" style="margin-top:18px;width:100%">${t('v.create')}</button>
+  </form>`);
+}
+async function submitVote(f){
+  const fd=new FormData(f);
+  let title = fd.get('theme')==='custom' ? String(fd.get('custom')||'').trim() : t('v.t'+fd.get('theme'));
+  if(!title) return toast(t('toast.voteTitle'));
+  const people=[];
+  for(const r of f.querySelectorAll('.prow')){
+    const n=r.querySelector('.pname').value.trim(), file=r.querySelector('.pphoto').files[0];
+    if(!n) continue;
+    if(!ok(n)) return toast(t('toast.banned'));
+    let img=''; try{ img=file?await thumb(file,48):'' }catch{ toast(t('toast.photo')) }
+    people.push([n,img]);
+  }
+  if(people.length<2) return toast(t('toast.min2'));
+  if(!ok(title)) return toast(t('toast.banned'));
+  const data={t:title,p:people,lg:LANG}, id=hid(JSON.stringify(data));
+  saveCreated({id,type:'vote',title,at:Date.now()});
+  const url=shareUrl('#/vote/play?d='+enc(data));
+  show(page(`<span class="pill">${t('v.linkReady')}</span><h1 style="margin-top:12px">${t('v.live')}</h1>
+    ${sharePanel(url,`${title}! ${url}`,{kicker:t('v.squad'),title,rows:people.map(([n,img])=>({name:n,pct:0,img})),foot:t('story.vote')})}
+    <div class="row" style="margin-top:14px"><a class="btn ghost" href="${esc(url)}">${t('v.open')}</a><a class="btn ghost" href="#/vote/new">${t('v.another')}</a></div>`));
+}
+let VLIVE=null, VP=null;
+function countsOf(id,n){ const c=store.get('vc_v_'+id,null); return Array.isArray(c)&&c.length===n ? c : Array(n).fill(0) }
+function paintVotes(id,n){
+  const c=countsOf(id,n), tot=c.reduce((a,b)=>a+b,0), max=Math.max(0,...c);
+  for(let i=0;i<n;i++){
+    const pct=tot?Math.round(c[i]/tot*100):0, q=s=>document.querySelector(`[data-${s}="${i}"]`);
+    if(!q('cnt')) return;
+    q('cnt').textContent=c[i]; q('pct').textContent=pct; q('bar').style.width=pct+'%';
+    q('crown').textContent=(max>0&&c[i]===max)?'👑':'';
+  }
+}
+function votePlay(params){
+  let data; try{ data=dec(params.get('d')||'') }catch{ return notFound(t('o.broken')) }
+  if(!data||!Array.isArray(data.p)) return notFound(t('o.broken'));
+  const id=hid(JSON.stringify(data));
+  if(isBlocked(id)) return notFound(t('o.removed'));
+  const ppl=data.p, n=ppl.length, me=store.get('vc_me_'+id,null), c=countsOf(id,n), tot=c.reduce((a,b)=>a+b,0), max=Math.max(0,...c);
+  VP={id,n};
+  const pctOf=i=>tot?Math.round(c[i]/tot*100):0;
+  const cards=ppl.map(([nm,img],i)=>`<div class="glass" style="display:flex;gap:14px;align-items:center;margin-top:12px">${avatar(img,nm)}<div style="flex:1;min-width:0">
+    <div class="row" style="justify-content:space-between"><b>${esc(nm)} <span class="crown" data-crown="${i}">${(max>0&&c[i]===max)?'👑':''}</span></b><span><span data-cnt="${i}">${c[i]}</span> ${t('v.votes')} · <span data-pct="${i}">${pctOf(i)}</span>%</span></div>
+    <div class="bar" style="margin:8px 0 10px"><i data-bar="${i}" style="width:${pctOf(i)}%"></i></div>
+    ${me==null?`<button class="btn sm" data-act="vote-cast" data-i="${i}">${t('v.voteFor',{n:esc(nm)})}</button>`:(me===i?`<span class="pill">${t('v.yours')}</span>`:'')}
+    </div></div>`).join('');
+  const rows=ppl.map(([nm,img],i)=>({name:nm,pct:pctOf(i),img,crown:max>0&&c[i]===max}));
+  const url=shareUrl('#/vote/play?d='+enc(data));
+  clearInterval(VLIVE); VLIVE=setInterval(()=>paintVotes(id,n),2000);
+  setTimeout(()=>paintVotes(id,n),0);
+  return page(`<span class="pill">${t('v.squad')}</span><h1 style="margin-top:10px">${esc(data.t)}</h1><p style="color:var(--mut)">${me==null?t('v.tap'):t('v.thanks')}</p>
+    ${cards}
+    <div style="margin-top:14px">${sharePanel(url,`${data.t}! ${url}`,{kicker:t('v.squad'),title:data.t,rows,foot:t('story.vote')})}</div>
+    ${ad('result')}${continueBar()}`);
+}
+function castVote(i){
+  if(!VP) return;
+  if(store.get('vc_me_'+VP.id,null)!=null) return toast(t('toast.already'));
+  const c=countsOf(VP.id,VP.n); c[i]++;
+  store.set('vc_v_'+VP.id,c); store.set('vc_me_'+VP.id,i);
+  confetti(); route();
+}
+
+/* ================= LEGAL / CONTACT ================= */
+function prose(title,html){ return page(`<div class="prose"><h1>${esc(title)}</h1>${html}</div>`) }
+function contactView(){ return page(`<h1>${t('c.title')}</h1><p style="color:var(--mut)">${t('c.desc')}</p>
+  <form id="cform" class="glass"><label for="cn">${t('c.name')}</label><input id="cn" name="name" required maxlength="60"><label for="ce">${t('c.email')}</label><input id="ce" name="email" type="email" required maxlength="120"><label for="cm">${t('c.msg')}</label><textarea id="cm" name="message" rows="5" required maxlength="2000"></textarea><button class="btn" style="margin-top:16px;width:100%">${t('c.send')}</button></form>`) }
+
+/* ================= ADMIN (hidden: #admin; labels in English) ================= */
+let ADM_TAB='sections';
+async function sha256(x){ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(x)); return [...new Uint8Array(b)].map(v=>v.toString(16).padStart(2,'0')).join('') }
+function syncAdminBar(){
+  const bar=$('#admin-bar'), logged=sessionStorage.getItem('vc_admin')==='1';
+  if(logged){ bar.classList.remove('hide'); bar.innerHTML=`<div class="wrap row" style="height:52px"><span class="pill">Admin mode</span><a class="btn ghost sm" href="#/admin">Dashboard</a><button class="btn ghost sm" data-act="admin-out" style="margin-left:auto">Log out</button></div>` }
+  else if(location.hash==='#admin'){ bar.classList.remove('hide'); bar.innerHTML=`<form id="alogin" class="wrap row" style="height:auto;padding:12px 18px"><b style="margin-right:auto">Admin sign-in</b><input id="apw" type="password" placeholder="Admin password" autocomplete="current-password" style="max-width:240px" aria-label="Admin password"><button class="btn sm">Sign in</button></form>` }
+  else { bar.classList.add('hide'); bar.innerHTML='' }
+}
+function adminView(){
+  if(sessionStorage.getItem('vc_admin')!=='1'){ setTimeout(()=>{ location.hash='#/' },0); return '' }
+  const s=settings();
+  const tabs={sections:'Sections',trends:'Trends',moderation:'Moderation',keywords:'Keywords',ads:'AdSense'};
+  const body={sections:secTab,trends:trendTab,moderation:modTab,keywords:kwTab,ads:adsTab}[ADM_TAB](s);
+  return page(`<h1>Admin dashboard</h1>
+    <div class="tabs">${Object.entries(tabs).map(([k,l])=>`<button class="btn sm ${ADM_TAB===k?'':'ghost'}" data-act="adm-tab" data-tab="${k}">${l}</button>`).join('')}</div>
+    <div class="glass" style="margin-top:0">${body}</div>`);
+}
+function secTab(s){
+  return `<h3>Homepage sections</h3>
+  ${s.sections.map((x,i)=>`<div class="item"><input style="flex:1;min-width:180px" value="${esc(secTitle(x))}" data-change="sec-title" data-i="${i}" aria-label="Section title"><label style="margin:0;display:flex;gap:6px;align-items:center;color:var(--fg)"><input type="checkbox" data-change="sec-vis" data-i="${i}" ${x.visible?'checked':''} style="width:auto">Visible</label>
+    ${x.type==='text'?`<textarea rows="2" style="flex-basis:100%" data-change="sec-body" data-i="${i}" aria-label="Section body">${esc(secBodyText(x))}</textarea>`:''}
+    <span class="row"><button class="btn ghost sm" data-act="sec-up" data-i="${i}">Up</button><button class="btn ghost sm" data-act="sec-down" data-i="${i}">Down</button><button class="btn ghost sm" data-act="sec-del" data-i="${i}">Delete</button></span></div>`).join('')}
+  <form id="secform" class="row" style="margin-top:14px"><input name="title" placeholder="New text section title" maxlength="50" required style="flex:1;min-width:180px"><input name="body" placeholder="Body text" maxlength="600" style="flex:2;min-width:220px"><button class="btn sm">Add section</button></form>`;
+}
+function trendTab(){
+  return `<h3>Trending buzz & battles</h3>
+  ${trendsData().map(x=>`<div class="item"><b style="flex:1;min-width:160px">${esc(x.head)}</b><span class="pill">${esc(x.cat)}</span><button class="btn ghost sm" data-act="trend-feat" data-id="${esc(x.id)}">${x.feat?'Unfeature':'Feature'}</button><button class="btn ghost sm" data-act="trend-del" data-id="${esc(x.id)}">Delete</button></div>`).join('')}
+  <form id="tform" style="margin-top:16px"><div class="grid two"><div><label for="th">Headline</label><input id="th" name="head" required maxlength="100"></div><div><label for="tc">Category</label><input id="tc" name="cat" maxlength="30"></div></div>
+  <label for="ts">Summary</label><textarea id="ts" name="sum" rows="3" maxlength="300"></textarea>
+  <div class="grid two"><div><label for="tg">Tags (comma separated)</label><input id="tg" name="tags" maxlength="120"></div><div><label for="tl">Link (#/quiz/new or https://)</label><input id="tl" name="link" maxlength="200"></div></div>
+  <label for="ti">Image URL (optional)</label><input id="ti" name="img" maxlength="400">
+  <label style="display:flex;gap:8px;align-items:center;color:var(--fg)"><input type="checkbox" name="feat" style="width:auto">Featured</label>
+  <button class="btn" style="margin-top:14px">Publish trend</button></form>`;
+}
+function modTab(){
+  const c=store.get('vc_created',[]);
+  return `<h3>Content moderation</h3><p style="color:var(--mut);font-size:14px">Items created on this device. Removing an item blocks its link.</p>
+  ${c.length?c.map(x=>`<div class="item"><span style="flex:1">${esc(x.title)}</span><span class="pill">${esc(x.type)}</span><button class="btn ghost sm" data-act="mod-del" data-id="${esc(x.id)}">Remove</button></div>`).join(''):'<p style="color:var(--mut)">Nothing to review yet.</p>'}`;
+}
+function kwTab(s){ return `<h3>Banned keywords</h3><p style="color:var(--mut);font-size:14px">Comma separated. Names, titles, topics and questions containing these words are blocked.</p><form id="kform"><textarea name="words" rows="4" aria-label="Banned keywords">${esc(s.banned.join(', '))}</textarea><button class="btn" style="margin-top:12px">Save keywords</button></form>` }
+function adsTab(s){
+  const a=s.adsense;
+  return `<h3>AdSense</h3><p style="color:var(--mut);font-size:14px">Ads appear only when enabled and a slot ID is set. Enable only after Google AdSense approves your site.</p>
+  <form id="aform"><label for="ac">Publisher ID</label><input id="ac" name="client" placeholder="ca-pub-XXXXXXXXXXXXXXXX" value="${esc(a.client)}">
+  <label style="display:flex;gap:8px;align-items:center;color:var(--fg)"><input type="checkbox" name="enabled" ${a.enabled?'checked':''} style="width:auto">Enable ads</label>
+  ${['top','inFeed','result'].map(k=>`<div class="grid two" style="margin-top:10px"><div><label for="sl-${k}">${{top:'Top slot ID',inFeed:'In-feed slot ID',result:'Result page slot ID'}[k]}</label><input id="sl-${k}" name="slot_${k}" value="${esc(a.slots[k])}"></div><label style="display:flex;gap:8px;align-items:center;margin-top:30px;color:var(--fg)"><input type="checkbox" name="on_${k}" ${a.on[k]?'checked':''} style="width:auto">Show this slot</label></div>`).join('')}
+  <button class="btn" style="margin-top:16px">Save AdSense settings</button></form>`;
+}
+
+/* ================= ROUTER ================= */
+const VIEWS={'/':home,'/quiz/new':quizNew,'/quiz/build':quizBuild,'/quiz/play':quizPlay,'/vote/new':voteNew,'/vote/play':votePlay,'/trends':trendsView,'/contact':contactView,
+  '/about':()=>prose(t('legal.about.t'),t('legal.about.b')),
+  '/privacy':()=>prose(t('legal.priv.t'),t('legal.priv.b')),
+  '/terms':()=>prose(t('legal.terms.t'),t('legal.terms.b')),
+  '/disclaimer':()=>prose(t('legal.disc.t'),t('legal.disc.b')),
+  '/admin':adminView};
+let LASTPATH=null;
+function route(){
+  clearInterval(VLIVE);
+  chrome();
+  const raw=location.hash.startsWith('#/')?location.hash.slice(1):'/';
+  const [path,qs]=raw.split('?'); const params=new URLSearchParams(qs||'');
+  const view=VIEWS[path]||home;
+  $('#app').innerHTML=view(params);
+  if(path!==LASTPATH){ window.scrollTo(0,0); LASTPATH=path }
+  afterRender(); syncAdminBar();
+}
+
+/* ================= EVENTS ================= */
+document.addEventListener('click', async e=>{
+  const el=e.target.closest('[data-act]'); if(!el) return;
+  const act=el.dataset.act;
+  if(act==='theme'){ const light=!document.documentElement.classList.contains('light'); document.documentElement.classList.toggle('light',light); store.set('vc_theme',light?'light':'dark'); return }
+  if(act==='quiz-name'){ const n=$('#fname').value.trim(); if(!n) return toast(t('toast.enterName')); if(!ok(n)) return toast(t('toast.diffName')); QP.name=n; QP.step=0; return route() }
+  if(act==='quiz-pick'){ QP.ans[QP.step]=+el.dataset.j; return route() }
+  if(act==='quiz-next'){ if(QP.ans[QP.step]==null) return; QP.step++; return route() }
+  if(act==='quiz-again'){ QP.step=-1; QP.ans=[]; QP.saved=false; QP.name=''; return route() }
+  if(act==='q-add'){ if(DRAFT.qs.length>=20) return toast(t('toast.max')); DRAFT.qs.push(['',['','','',''],0]); return route() }
+  if(act==='q-del'){ if(DRAFT.qs.length<=3) return toast(t('b.min')); DRAFT.qs.splice(+el.dataset.i,1); return route() }
+  if(act==='q-create') return submitQuizDraft();
+  if(act==='ai-gen') return genAI();
+  if(act==='vote-cast') return castVote(+el.dataset.i);
+  if(act==='vote-add'){ const f=$('#people'); if(f.querySelectorAll('.prow').length>=8) return toast(t('toast.max8')); f.insertAdjacentHTML('beforeend',prow()); return }
+  if(act==='story') return storyShare(el.dataset.mode);
+  if(act==='copy') return copyText(el.dataset.url);
+  if(act==='react'){ const rx=store.get('vc_react',{}), k=el.dataset.id; rx[k]=rx[k]||{}; rx[k][el.dataset.e]=(rx[k][el.dataset.e]||0)+1; store.set('vc_react',rx); return route() }
+  if(act==='admin-out'){ sessionStorage.removeItem('vc_admin'); location.hash='#/'; return }
+  if(act==='adm-tab'){ ADM_TAB=el.dataset.tab; return route() }
+  if(act==='sec-up'||act==='sec-down'||act==='sec-del'){
+    const s=settings(), i=+el.dataset.i;
+    if(act==='sec-del') s.sections.splice(i,1);
+    else { const j=act==='sec-up'?i-1:i+1; if(j<0||j>=s.sections.length) return; [s.sections[i],s.sections[j]]=[s.sections[j],s.sections[i]] }
+    saveSettings(s); return route();
+  }
+  if(act==='trend-feat'||act==='trend-del'){
+    const tr=trendsData(), i=tr.findIndex(x=>x.id===el.dataset.id); if(i<0) return;
+    if(act==='trend-del') tr.splice(i,1); else tr[i].feat=!tr[i].feat;
+    store.set('vc_trends',tr); return route();
+  }
+  if(act==='mod-del'){
+    const id=el.dataset.id;
+    store.set('vc_created',store.get('vc_created',[]).filter(x=>x.id!==id));
+    store.set('vc_blocked',[...new Set([...store.get('vc_blocked',[]),id])]);
+    toast(t('toast.removed')); return route();
+  }
+});
+document.addEventListener('input', e=>{
+  const d=e.target.dataset;
+  if(DRAFT && d.f){
+    const i=+d.i, j=+d.j;
+    if(d.f==='name') DRAFT.name=e.target.value;
+    if(d.f==='tp') DRAFT.tp=e.target.value;
+    if(d.f==='q') DRAFT.qs[i][0]=e.target.value;
+    if(d.f==='o') DRAFT.qs[i][1][j]=e.target.value;
+  }
+});
+document.addEventListener('change', e=>{
+  const tg=e.target, d=tg.dataset;
+  if(tg.id==='langsel'){ LANG=tg.value; store.set('vc_lang',LANG); if(DRAFT) DRAFT.lg=LANG; return route() }
+  if(tg.id==='vt'){ $('#vc').style.display=tg.value==='custom'?'block':'none'; return }
+  if(DRAFT && d.f){
+    if(d.f==='c'){ DRAFT.qs[+d.i][2]=+d.j; return }
+    if(d.f==='lg'){ DRAFT.lg=tg.value; return }
+    if(d.f==='count'){ DRAFT.count=+tg.value; return }
+    if(d.f==='diff'){ DRAFT.diff=tg.value; return }
+    if(d.f==='photo'){ const f=tg.files[0]; if(f) thumb(f,64).then(v=>{ DRAFT.a=v }).catch(()=>toast(t('toast.photo'))); return }
+  }
+  const k=d.change; if(!k) return;
+  const s=settings(), i=+d.i;
+  if(k==='sec-title'){ s.sections[i].title=tg.value.slice(0,50)||s.sections[i].title; delete s.sections[i].titleKey }
+  if(k==='sec-vis') s.sections[i].visible=tg.checked;
+  if(k==='sec-body'){ s.sections[i].body=tg.value.slice(0,600); delete s.sections[i].bodyKey }
+  saveSettings(s); if(k==='sec-vis') route();
+});
+document.addEventListener('submit', async e=>{
+  const f=e.target; if(!f.matches('form')) return;
+  e.preventDefault();
+  if(f.id==='vform') return submitVote(f);
+  if(f.id==='cform'){ const d=new FormData(f); const s=settings(); location.href=`mailto:${s.contactEmail}?subject=${encodeURIComponent('VibeClash contact from '+d.get('name'))}&body=${encodeURIComponent(d.get('message')+'\n\nFrom: '+d.get('email'))}`; toast(t('toast.mail')); return }
+  if(f.id==='alogin'){
+    if(!ADMIN_SHA256) return toast(t('toast.adminNo'));
+    const h=await sha256($('#apw').value);
+    if(h===ADMIN_SHA256){ sessionStorage.setItem('vc_admin','1'); location.hash='#/admin' } else toast(t('toast.wrongpw'));
+    return;
+  }
+  if(f.id==='secform'){ const d=new FormData(f); const s=settings(); s.sections.push({id:uid(),type:'text',title:String(d.get('title')).slice(0,50),body:String(d.get('body')||'').slice(0,600),visible:true}); saveSettings(s); return route() }
+  if(f.id==='tform'){
+    const d=new FormData(f), head=String(d.get('head')||'').trim();
+    if(!head) return toast('Headline is required');
+    const tr=trendsData();
+    tr.unshift({id:uid(),cat:String(d.get('cat')||'Trending').trim()||'Trending',head,sum:String(d.get('sum')||'').trim(),tags:String(d.get('tags')||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,8),link:String(d.get('link')||'').trim(),img:String(d.get('img')||'').trim(),feat:d.get('feat')==='on'});
+    store.set('vc_trends',tr); toast('Trend published'); return route();
+  }
+  if(f.id==='kform'){ const s=settings(); s.banned=String(new FormData(f).get('words')||'').split(',').map(x=>x.trim().toLowerCase()).filter(Boolean).slice(0,500); saveSettings(s); toast('Keywords saved'); return }
+  if(f.id==='aform'){
+    const d=new FormData(f), s=settings();
+    s.adsense={enabled:d.get('enabled')==='on',client:String(d.get('client')||'').trim(),slots:{top:String(d.get('slot_top')||'').trim(),inFeed:String(d.get('slot_inFeed')||'').trim(),result:String(d.get('slot_result')||'').trim()},on:{top:d.get('on_top')==='on',inFeed:d.get('on_inFeed')==='on',result:d.get('on_result')==='on'}};
+    saveSettings(s); toast('AdSense settings saved'); return route();
+  }
+});
+window.addEventListener('hashchange', ()=>{ if(location.hash.startsWith('#/quiz/build')) { /* keep draft when switching modes */ } route() });
+window.addEventListener('storage', e=>{ if(e.key&&VP&&e.key==='vc_v_'+VP.id) paintVotes(VP.id,VP.n) });
+
+/* ================= BOOT ================= */
+LANG = store.get('vc_lang', null) || (navigator.language||'en').slice(0,2);
+if(!I18N[LANG]) LANG='en';
+if(store.get('vc_theme',null)==='light') document.documentElement.classList.add('light');
+route();
+</script>
+</body>
+</html>
